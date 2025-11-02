@@ -1,5 +1,8 @@
 package calculator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class splitAndNumSum {
 
     private final String string;
@@ -8,14 +11,20 @@ public class splitAndNumSum {
         this.string = string;
     }
 
-    //문자열에서 쉼표(,) 또는 콜론(:)을 기준으로 분리한 각 숫자의 합 반환.
     public int split(String string) {
         int stringTotalNum = 0;
+        String regex = ",|:";
 
-        // null 이거나 빈 문자열이 들어오면 0
         if (string == null || string.isEmpty()) return 0;
 
-        String[] numbers = string.split(",|:");
+        String findCustom = customCheck(string);
+
+        if(findCustom != null) {
+            regex += "|" + findCustom;
+            string = newString(string, findCustom);
+        }
+
+        String[] numbers = string.split(regex);
 
         for (String s : numbers) {
             int number;
@@ -37,8 +46,32 @@ public class splitAndNumSum {
         return stringTotalNum;
     }
 
+    private static String newString(String string, String findCustom) {
+        string = string.replace("//" + findCustom + "\n", "");
+        string = string.replace("//" + findCustom + "\\n", "");
+        return string;
+    }
+
+    //"//"와 "\n" 사이에 위치하는 문자를 커스텀 구분자로 지정할 수 있음
+    public String customCheck(String string) {
+        Pattern pattern = Pattern.compile("//(.*?)(\\\\n|\n)");
+        Matcher matcher = pattern.matcher(string);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        return null;
+    }
+
+
 }
 
-//"//"와 "\n" 사이에 위치하는 문자를 커스텀 구분자로 지정할 수 있음
+
+
+
+
+
+
 
 
