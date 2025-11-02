@@ -20,7 +20,7 @@ class ApplicationTest extends NsTest {
             //when
 
             //then
-            assertThat(output()).contains("결과 = 6");
+            assertThat(output()).contains("결과 : 6");
         });
     }
 
@@ -38,6 +38,11 @@ class ApplicationTest extends NsTest {
             assertThatThrownBy(() -> runException("-1,2,3"))
                 .isInstanceOf(IllegalArgumentException.class)
         );
+    }
+
+    private void runException(String input) {
+        splitAndNumSum test = new splitAndNumSum(input);
+        test.split(input);
     }
 
     @Override

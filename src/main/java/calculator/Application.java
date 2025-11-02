@@ -11,7 +11,7 @@ public class Application {
         splitAndNumSum test = new splitAndNumSum(input);
 
         try {
-            System.out.println("결과 = " + test.split(input));
+            System.out.println("결과 : " + test.split(input));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
